@@ -1,0 +1,22 @@
+sudo: false
+
+language: java
+jdk:
+  - oraclejdk6
+
+cache:
+    directories:
+        - $HOME/.m2
+        - $HOME/apache-maven-3.3.9
+
+before_script:
+    - wget https://raw.githubusercontent.com/yregaieg/maven-config-script/master/scripts/mvn.sh
+    - chmod +x mvn.sh
+    - echo "MAVEN_OPTS='-Xmx2g -XX:MaxPermSize=512m'" > ~/.mavenrc
+
+
+script:
+    - rm -rf $HOME/.m2/repository/org/alfresco/surf/
+    - cd surf
+    - ./mvn.sh clean install
+    - rm -rf $HOME/.m2/repository/org/alfresco/surf/
